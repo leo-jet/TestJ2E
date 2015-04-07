@@ -24,6 +24,8 @@ public class test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "au revoir";
 		String name = request.getParameter("name");
+		String[] noms = {"Tematio", "Jague", "Emmanuel"};
+		request.setAttribute("noms", noms);
 		request.setAttribute("name", name);
 		request.setAttribute("variable", message);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
