@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.octest.beans.Auteur;
+
 /**
  * Servlet implementation class test
  */
@@ -23,11 +25,12 @@ public class test extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String message = "au revoir";
-		String name = request.getParameter("name");
-		String[] noms = {"Tematio", "Jague", "Emmanuel"};
-		request.setAttribute("noms", noms);
-		request.setAttribute("name", name);
-		request.setAttribute("variable", message);
+		Auteur auteur = new Auteur();
+		auteur.setActif(true);
+		auteur.setNom("Tematio");
+		auteur.setPrenom("Emmanuel");
+		
+		request.setAttribute("auteur", auteur);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
