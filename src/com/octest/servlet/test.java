@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.octest.beans.Auteur;
+import com.octest.forms.ConnectionForms;
 
 /**
  * Servlet implementation class test
@@ -24,17 +25,17 @@ public class test extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String message = "au revoir";
-		Auteur auteur = new Auteur();
-		auteur.setActif(true);
-		auteur.setNom("Tematio");
-		auteur.setPrenom("Emmanuel");
-		
-		request.setAttribute("auteur", auteur);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		ConnectionForms form = new ConnectionForms();
+		
+		form.verifierIdentifiant(request);
+		
+		request.setAttribute("form", form);
+		
+		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 }

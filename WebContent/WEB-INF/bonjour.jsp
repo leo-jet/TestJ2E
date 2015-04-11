@@ -6,9 +6,19 @@
 </head>
 <body>
 	<%@ include file="menujsp.jsp"  %>
-	Bonjour ${ auteur.prenom}
-	<p> 
-		<p> <c:out value="Bonjour avec les balises JSTL"></c:out>
-	</p>
+	<c:if test="${ !empty form.resultat }"><p><c:out value="${ form.resultat }"/></p></c:if>
+	<form method="post" action="bonjour">
+		<p> 
+			<label for="login"> login : </label>
+			<input type="text" id="login" name="login"/>
+		</p>
+		<p> 
+			<label for="pass"> mot de pass : </label>
+			<input type="password" id="pass" name="pass"/>
+		</p>
+		<p> 
+			<input type="submit" value="VALIDER"/>
+		</p>
+	</form>
 </body>
 </html>
