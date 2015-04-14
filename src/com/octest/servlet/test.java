@@ -5,10 +5,12 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.octest.bdd.Noms;
 import com.octest.beans.Auteur;
 import com.octest.forms.ConnectionForms;
 
@@ -25,16 +27,13 @@ public class test extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Noms tableNoms = new Noms();
+		request.setAttribute("utilisateurs", tableNoms.recupererUtilisateurs());
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		ConnectionForms form = new ConnectionForms();
-		
-		form.verifierIdentifiant(request);
-		
-		request.setAttribute("form", form);
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}

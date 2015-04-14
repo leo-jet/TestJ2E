@@ -9,16 +9,24 @@
 	<c:if test="${ !empty form.resultat }"><p><c:out value="${ form.resultat }"/></p></c:if>
 	<form method="post" action="bonjour">
 		<p> 
-			<label for="login"> login : </label>
-			<input type="text" id="login" name="login"/>
+			<label for="nom"> Nom : </label>
+			<input type="text" id="nom" name="nom"/>
 		</p>
 		<p> 
-			<label for="pass"> mot de pass : </label>
-			<input type="password" id="pass" name="pass"/>
+			<label for="prenom"> Prénom : </label>
+			<input type="text" id="prenom" name="prenom"/>
 		</p>
 		<p> 
 			<input type="submit" value="VALIDER"/>
 		</p>
 	</form>
+	
+	<ul>
+		<c:forEach var="utilisateur" items="${ utilisateurs }">
+			<c:out value="Bonjour"></c:out>
+			<li><c:out value="${ utilisateur.prenom }"/> <c:out value="${ utilisateur.nom }"/></li>
+		</c:forEach>
+	</ul>
+	
 </body>
 </html>
