@@ -13,22 +13,24 @@ import java.sql.Statement;
 import com.octest.beans.Utilisateur;
 
 public class Noms {
-	public List<Utilisateur> recupererUtilisateurs(){
+	
+	private Connection connexion = null;
+	
+	
+	
+	public List<Utilisateur> recupererUtilisateurs() {
+		
 		List<Utilisateur> utilisateurs = new ArrayList<Utilisateur>();
 		
-		//chargement du driver
-		try{
-			Class.forName("com.mysql.jdbc.Driver");
-		}catch(ClassNotFoundException e){
-		}
-		
 		// Connexion à la base 
-		Connection connexion = null;
 		Statement statement = null;
 		ResultSet resultat = null;
 		
+		loadDataBase();
+		
+		
 		try{
-			connexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/javadb", "root", "leoroot");
+			
 			statement = connexion.createStatement();
 			
 			//Execution de la requete 
@@ -38,7 +40,6 @@ public class Noms {
 			while (resultat.next()){
 				String nom = resultat.getString("nom");
 				String prenom = resultat.getString("prenom");
-				
 				Utilisateur utilisateur = new Utilisateur();
 				utilisateur.setNom(nom);
 				utilisateur.setPrenom(prenom);
@@ -62,6 +63,22 @@ public class Noms {
 		}
 			
 		return utilisateurs;
+	}
+	
+	private void loadDataBase() {
+		//chargement du driver
+		try{
+			Class.forName("com.mysql.jdbc.Driver");
+		}catch(ClassNotFoundException e){
+		}
+		
+		try{
+			connexion = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/javadb", "root", "leoroot");
+			System.out.println("Connexion effectuée");
+		}catch(SQLException e){
+			System.out.println("Echec de connexion");
+			e.printStackTrace();
+		}
 		
 	}
 }

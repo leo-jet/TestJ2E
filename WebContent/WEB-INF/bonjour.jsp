@@ -23,7 +23,6 @@
 	
 	<ul>
 		<c:forEach var="utilisateur" items="${ utilisateurs }">
-			<c:out value="Bonjour"></c:out>
 			<li><c:out value="${ utilisateur.prenom }"/> <c:out value="${ utilisateur.nom }"/></li>
 		</c:forEach>
 	</ul>

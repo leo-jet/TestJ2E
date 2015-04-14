@@ -2,6 +2,7 @@ package com.octest.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +30,9 @@ public class test extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Noms tableNoms = new Noms();
+		
 		request.setAttribute("utilisateurs", tableNoms.recupererUtilisateurs());
+	
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
