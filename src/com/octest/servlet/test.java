@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.octest.bdd.Noms;
 import com.octest.beans.Auteur;
+import com.octest.beans.Utilisateur;
 import com.octest.forms.ConnectionForms;
 
 /**
@@ -37,7 +38,14 @@ public class test extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNom(request.getParameter("nom"));
+		utilisateur.setPrenom(request.getParameter("prenom"));
 		
+		Noms tableNoms = new Noms();
+		tableNoms.ajouterUtilisateur(utilisateur);
+		
+		request.setAttribute("utilisateurs", tableNoms.recupererUtilisateurs());
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 }

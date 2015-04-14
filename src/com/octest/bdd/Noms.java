@@ -6,6 +6,7 @@ import java.util.List;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -80,5 +81,21 @@ public class Noms {
 			e.printStackTrace();
 		}
 		
+	}
+	
+	public void ajouterUtilisateur(Utilisateur utilisateur){
+		
+		loadDataBase();
+		
+		try {
+			PreparedStatement pStatement = connexion.prepareStatement("INSERT INTO noms(nom, prenom) VALUES(?,?);");
+			pStatement.setString(1, utilisateur.getNom());
+			pStatement.setString(2, utilisateur.getPrenom());
+			
+			pStatement.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
