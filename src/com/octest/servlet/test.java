@@ -39,11 +39,9 @@ public class test extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		try{
-			request.setAttribute("utilisateurs", utilisateurDao.liste());
-		}catch(DaoException e){
-			
-		}
+		
+		request.setAttribute("utilisateurs", utilisateurDao.liste());
+
 		
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
