@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.octest.beans.BeanException;
 import com.octest.beans.Utilisateur;
 
 public class UtilisateurDaoImpl implements UtilisateurDao {
@@ -18,7 +19,7 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 	}
 
 	@Override
-	public void ajouterUtilisateur(Utilisateur utilisateur) {
+	public void ajouterUtilisateur(Utilisateur utilisateur) throws DaoException {
 		// TODO Auto-generated method stub
 		Connection connexion = null;
 		PreparedStatement pStatement = null;
@@ -30,10 +31,28 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 			pStatement.setString(2, utilisateur.getPrenom());
 			
 			pStatement.executeUpdate();
+			connexion.commit();
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try{
+				if(connexion != null){
+					connexion.rollback();
+				}
+			} catch (SQLException e2){
+			}
+			throw new DaoException("Impossible de communiquer avec la base de données");
 		}
+		finally {
+			try{
+				if(connexion != null){
+					connexion.rollback();
+				}
+			} catch (SQLException e2){
+			}
+			throw new DaoException("Impossible de communiquer avec la base de données finally");
+		}
+		
 	}
 
 	@Override
@@ -54,7 +73,12 @@ public class UtilisateurDaoImpl implements UtilisateurDao {
 				String nom = resultat.getString("nom");
 				String prenom = resultat.getString("prenom");
 				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setNom(nom);
+				try {
+					utilisateur.setNom(nom);
+				} catch (BeanException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				utilisateur.setPrenom(prenom);
 				
 				utilisateurs.add(utilisateur);

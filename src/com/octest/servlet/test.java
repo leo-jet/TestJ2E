@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.octest.bdd.Noms;
 import com.octest.beans.Auteur;
+import com.octest.beans.BeanException;
 import com.octest.beans.Utilisateur;
+import com.octest.dao.DaoException;
 import com.octest.dao.DaoFactory;
 import com.octest.dao.UtilisateurDao;
 import com.octest.forms.ConnectionForms;
@@ -37,18 +39,31 @@ public class test extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try{
+			request.setAttribute("utilisateurs", utilisateurDao.liste());
+		}catch(DaoException e){
+			
+		}
 		
-		request.setAttribute("utilisateurs", utilisateurDao.liste());
-	
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utilisateur utilisateur = new Utilisateur();
-		utilisateur.setNom(request.getParameter("nom"));
+		try {
+			utilisateur.setNom(request.getParameter("nom"));
+		} catch (BeanException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		utilisateur.setPrenom(request.getParameter("prenom"));
 		
-		utilisateurDao.ajouterUtilisateur(utilisateur);
+		try {
+			utilisateurDao.ajouterUtilisateur(utilisateur);
+		} catch (DaoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		request.setAttribute("utilisateurs", utilisateurDao.liste());
 		this.getServletContext().getRequestDispatcher("/WEB-INF/bonjour.jsp").forward(request, response);

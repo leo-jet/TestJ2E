@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.octest.beans.BeanException;
 import com.octest.beans.Utilisateur;
 
 public class Noms {
@@ -42,7 +43,12 @@ public class Noms {
 				String nom = resultat.getString("nom");
 				String prenom = resultat.getString("prenom");
 				Utilisateur utilisateur = new Utilisateur();
-				utilisateur.setNom(nom);
+				try {
+					utilisateur.setNom(nom);
+				} catch (BeanException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				utilisateur.setPrenom(prenom);
 				
 				utilisateurs.add(utilisateur);
